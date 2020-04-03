@@ -21,10 +21,10 @@ class PostRepositoryTest {
     @Autowired
     PostRepository repository;
 
-    private void beforeSetting() {
+    private Post beforeSetting() {
         Post post = new Post();
         post.setTitle("jpa title");
-        repository.save(post);
+        return repository.save(post);
     }
 
     @Test
@@ -39,5 +39,15 @@ class PostRepositoryTest {
         beforeSetting();
         List <Post> findedPost = repository.findByTitle("jpa title", JpaSort.unsafe("LENGTH(title)"));
         assertThat(findedPost.size()).isEqualTo(1);
+    }
+
+    @Test
+    public void updateTitle() {
+        Post spring = beforeSetting();
+        int update = repository.updateTitle("hibernate", spring.getId());
+        assertThat(update).isEqualTo(1);
+        assertThat(repository.findById(spring.getId()).get().getTitle()).isEqualTo("hibernate");
+
+
     }
 }
