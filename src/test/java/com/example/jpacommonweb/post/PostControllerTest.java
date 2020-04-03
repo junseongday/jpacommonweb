@@ -35,7 +35,22 @@ public class PostControllerTest {
         postRepository.save(post);
         List<Post> all = postRepository.findAll();
         assertThat(all.size()).isEqualTo(1);
+    }
 
+    @Test
+    public void save () {
+        Post post = new Post();
+        post.setTitle("jpa");
+        postRepository.save(post);
+        List<Post> all = postRepository.findAll();
+
+        Post updatePost = new Post();
+        updatePost.setTitle("jpa");
+        updatePost.setId(1L);
+        postRepository.save(post);
+        List<Post> all2 = postRepository.findAll();
+
+        assertThat(all2.size()).isEqualTo(2);
     }
 
     @Test
