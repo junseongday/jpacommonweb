@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.JpaSort;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
@@ -35,7 +37,7 @@ class PostRepositoryTest {
     @Test
     void findByTitle() {
         beforeSetting();
-        List <Post> findedPost = repository.findByTitle("jpa title");
+        List <Post> findedPost = repository.findByTitle("jpa title", JpaSort.unsafe("LENGTH(title)"));
         assertThat(findedPost.size()).isEqualTo(1);
     }
 }
